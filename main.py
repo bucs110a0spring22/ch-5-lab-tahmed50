@@ -32,8 +32,31 @@ import time
 #                   Your Code Goes Below                #
 #########################################################
 
+def drawSquare(darty=None, width=0, top_left_x=0, top_left_y=0):
+  darty.up()
+  darty.goto(top_left_x,top_left_y)
+  for i in range(4):
+    darty.down()
+    darty.forward(width)
+    darty.right(90)
+    
 
+def drawLine(darty=None, x_start=0, y_start=0, x_end=0, y_end=0):
+  darty.up()
+  darty.goto(x_start, y_start)
+  darty.down()
+  darty.goto(x_end,y_end)
+  
 
+def drawCircle(darty=None, radius=0):
+  darty.circle(radius, steps=360)
+
+def setUpDartboard(myscreen=None, darty=None):
+  myscreen.setworldcoordinates(-10,-10,10,10)
+  drawSquare(darty, 10, -5, 5)
+  drawLine(darty, -5, 0, 5, 0)
+  drawLine(darty, 0, 5, 0, -5)
+  drawCircle(darty, 5)
 #########################################################
 #         Do not alter any code below here              #
 #       Your code must work with the main proivided     #
@@ -51,23 +74,21 @@ def main():
     window = turtle.Screen()
     darty = turtle.Turtle()
     darty.speed(0) # as fast as it will go!
-    setUpDartboard(myscreen=window, myturtle=darty)
+    setUpDartboard(window, darty)
 
     # Loop for 10 darts to test your code
     for i in range(10):
         throwDart(darty)
-        if isInCircle(myturtle=darty, radius=1):
-          print("You hit the dartboard!")
     print("\tPart A Complete...")
     print("=========== Part B ===========")
     darty.clear()
-    setUpDartboard(myscreen=window, myturtle=darty)
-    playDarts(myturtle=darty)
+    setUpDartboard(window, darty)
+    playDarts(darty)
     print("\tPart B Complete...")
     # Keep the window up until dismissed
     print("=========== Part C ===========")
     darty.clear()
-    setUpDartboard(myscreen=window, myturtle=darty)
+    setUpDartboard(window, darty)
     
     # Includes the following code in order to update animation periodically
     # instead of for each throw (saves LOTS of time):
@@ -76,7 +97,7 @@ def main():
 
     # Conduct simulation and print result
     number_darts = int(input("\nPlease input the number of darts to be thrown in the simulation:  "))
-    approx_pi = montePi(myturtle=darty, num_darts=number_darts)
+    approx_pi = montePi(darty, number_darts)
     print("\nThe estimation of pi using "+str(number_darts)+" virtual darts is " + str(approx_pi))
     print("\tPart C Complete...")
     # Don't hide or mess with window while it's 'working'
